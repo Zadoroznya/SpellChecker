@@ -1,0 +1,37 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#
+
+// Отримуємо базовий каталог домену програми, де знаходиться поточна збірка
+var baseDirectory = Host.ResolvePath(".");
+
+// Замінюємо частину шляху
+baseDirectory = baseDirectory.Replace("Classes", "Resources");
+
+// Вказуємо відносний шлях до файлу resx відносно цього базового каталогу
+string resxPath = baseDirectory + "\\Localization.resx";
+
+// Завантаження файлу .resx
+var doc = XDocument.Load(resxPath);
+
+// Отримання всіх ключів
+var keys = doc.Root.Descendants("data")
+    .Select(e => e.Attribute("name").Value)
+    .OrderBy(key => key)
+    .ToList();
+#>namespace SpellChecker.Classes;
+public struct Captions {
+<# foreach (var key in keys) { #>
+    public const string <#= key #> = "<#= key #>";
+<# } #>
+}

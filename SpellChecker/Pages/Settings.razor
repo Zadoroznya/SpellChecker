@@ -1,0 +1,31 @@
+﻿@page "/settings"
+@inject IStringLocalizer Localizer
+@inject NavigationManager Navigation
+@inject IUserPreferencesService PreferencesService
+@inject LayoutService LayoutService
+
+<PageTitle>@Localizer[Captions.AppSettings]</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="pa-4">
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h5">@Localizer[Captions.AppSettings]</MudText>
+
+        <MudDivider Class="my-2" />
+
+        <MudSelect T="ThemeMode" Label="@Localizer[Captions.SelectTheme]" @bind-Value="_themeMode" Class="mt-4">
+            <MudSelectItem Value="ThemeMode.System">@Localizer[Captions.SystemPreferences]</MudSelectItem>
+            <MudSelectItem Value="ThemeMode.Light">@Localizer[Captions.LightTheme]</MudSelectItem>
+            <MudSelectItem Value="ThemeMode.Dark">@Localizer[Captions.DarkTheme]</MudSelectItem>
+        </MudSelect>
+
+        <MudSelect T="AppLanguage" Label="@Localizer[Captions.SelectLanguage]" @bind-Value="_selectedLanguage" Class="mt-4">
+            <MudSelectItem Value="AppLanguage.En">@Localizer[Captions.EnglishLanguage]</MudSelectItem>
+            <MudSelectItem Value="AppLanguage.Ua">@Localizer[Captions.UkrainianLanguage]</MudSelectItem>
+            <MudSelectItem Value="AppLanguage.Ru">@Localizer[Captions.RussianLanguage]</MudSelectItem>
+        </MudSelect>
+
+        <MudButton OnClick="SaveSettings" Color="Color.Primary" Variant="Variant.Filled" Class="mt-4">
+	        @Localizer[Captions.SaveSettings]
+        </MudButton>
+    </MudPaper>
+</MudContainer>

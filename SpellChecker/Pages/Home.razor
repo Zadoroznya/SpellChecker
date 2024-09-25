@@ -1,0 +1,82 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject ISnackbar SnackbarService
+@inject IStringLocalizer Localizer
+
+<PageTitle>@Constants.AppName</PageTitle>
+
+<MudLoading Loading="@IsLoading" Text="@Localizer[Captions.GrammarChecker]">
+	@if (Response != null || !string.IsNullOrWhiteSpace(Response?.CorrectedText)) {
+		<MudCard Elevation="3" Class="mt-3">
+			<MudCardHeader>
+				<CardHeaderContent>
+					<MudText Typo="Typo.h6">@Localizer[Captions.ResultGrammarCheck]</MudText>
+				</CardHeaderContent>
+			</MudCardHeader>
+			<MudCardContent>
+				@if (OriginalText == FixedText) {
+					<MudStack>
+						<MudText Align="Align.Center">@Localizer[Captions.CorrectlyText]</MudText>
+						<MudText Align="Align.Center" Color="Color.Success">@OriginalText</MudText>
+					</MudStack>
+				}
+				else {
+					<MudSimpleTable Hover="true">
+						<thead>
+						<tr>
+							<th>@Localizer[Captions.OriginalText]</th>
+							<th>@Localizer[Captions.CorrectedText]</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>@OriginalText</td>
+							<td>@FixedText</td>
+						</tr>
+						</tbody>
+					</MudSimpleTable>
+				}
+			</MudCardContent>
+			<MudCardActions>
+				<MudButton StartIcon="@Icons.Material.Filled.Refresh"
+						   @onclick="Reset">@Localizer[Captions.TryAgain]</MudButton>
+				<MudButton StartIcon="@Icons.Material.Filled.History"
+						   Href="/history">
+					@Localizer[Captions.GoToHistoryPage]
+				</MudButton>
+			</MudCardActions>
+		</MudCard>
+	}
+	else {
+		<MudCard Elevation="3">
+			<MudCardHeader>
+				<CardHeaderContent>
+					<MudText Typo="Typo.h6">@Localizer[Captions.GrammarChecker]</MudText>
+				</CardHeaderContent>
+			</MudCardHeader>
+			<MudCardContent>
+				<MudTextField
+					T="string"
+					Label="@Localizer[Captions.TextToCheck]"
+					@bind-Value="Prompt"
+					Immediate="true"
+					Variant="Variant.Outlined"
+					Lines="5"
+					MaxLines="10"
+					Required="true"
+					RequiredError="@Localizer[Captions.TextRequiredMessage]"/>
+			</MudCardContent>
+			<MudCardActions>
+				<MudButton StartIcon="@Icons.Material.Filled.FactCheck"
+				           @onclick="CheckGrammar"
+				           disabled="@IsDisableCheck">
+					@Localizer[Captions.CheckYourGrammar]
+				</MudButton>
+				<MudButton EndIcon="@Icons.Material.Filled.History"
+				           Href="/history">
+					@Localizer[Captions.GoToHistoryPage]
+				</MudButton>
+			</MudCardActions>
+		</MudCard>
+	}
+</MudLoading>

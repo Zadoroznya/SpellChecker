@@ -1,0 +1,7 @@
+﻿@inject IStringLocalizer Localizer
+
+<MudNavMenu>
+	<MudNavLink Href="/" Match="NavLinkMatch.All">@Localizer[Captions.GrammarChecker]</MudNavLink>
+	<MudNavLink Href="/history" Match="NavLinkMatch.Prefix">@Localizer[Captions.History]</MudNavLink>
+	<MudNavLink Href="/settings" Match="NavLinkMatch.Prefix">@Localizer[Captions.Settings]</MudNavLink>
+</MudNavMenu>

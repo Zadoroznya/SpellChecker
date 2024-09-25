@@ -1,0 +1,19 @@
+@SpellChecker.Server_HostAddress = https://localhost:7098
+
+
+POST {{SpellChecker.Server_HostAddress}}/api/Check
+Content-Type: application/json
+
+{
+  "PromptRequest": "Test"
+}
+
+###
+
+DELETE {{SpellChecker.Server_HostAddress}}/api/DeleteItem/{id}
+
+###
+
+GET {{SpellChecker.Server_HostAddress}}/api/GetHistory
+
+###

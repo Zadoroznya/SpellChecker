@@ -1,0 +1,19 @@
+﻿@inject IStringLocalizer Localizer
+<MudDialog>
+	<DialogContent>
+		<MudText>@Localizer[Captions.DeleteConfirmation]</MudText>
+	</DialogContent>
+	<DialogActions>
+		<MudButton Color="Color.Primary" OnClick="Cancel">@Localizer[Captions.NoWord]</MudButton>
+		<MudButton Color="Color.Error" OnClick="Submit">@Localizer[Captions.YesWord]</MudButton>
+	</DialogActions>
+</MudDialog>
+
+@code {
+	[CascadingParameter]
+	private MudDialogInstance? MudDialog { get; set; }
+
+	private void Submit() => MudDialog?.Close(DialogResult.Ok(true));
+
+	private void Cancel() => MudDialog?.Cancel();
+}

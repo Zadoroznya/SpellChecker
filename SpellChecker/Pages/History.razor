@@ -1,0 +1,71 @@
+﻿@page "/history"
+@using SpellChecker.Core.Models
+@inject HttpClient Http
+@inject ISnackbar SnackbarService
+@inject IDialogService Dialog
+@inject IStringLocalizer Localizer
+
+<PageTitle>@Localizer[Captions.HistoryGrammarChecking]</PageTitle>
+
+<MudLoading Loading="@IsLoading" Text="@Localizer[Captions.LoadingData]">
+	<MudCard Elevation="3" Class="mt-3">
+		<MudCardHeader>
+			<CardHeaderContent>
+				<MudText Typo="Typo.h6">@Localizer[Captions.HistoryGrammarChecking]</MudText>
+			</CardHeaderContent>
+			<CardHeaderActions>
+				<MudButton StartIcon="@Icons.Material.Filled.FactCheck"
+				           @onclick="ClearGrammar"
+				           disabled="@IsDisableClear">
+					@Localizer[Captions.ClearHistory]
+				</MudButton>
+			</CardHeaderActions>
+		</MudCardHeader>
+		<MudCardContent>
+			<MudDataGrid T="GrammarCheckHistory"
+						 Virtualize="true"
+			             Items="Histories"
+			             ReadOnly="true"
+			             Dense="true"
+			             FixedHeader="true"
+			             Height="700"
+			             Elevation="3">
+				<Columns>
+					<PropertyColumn Property="x => x.CheckedAt"
+					                StickyLeft="true"
+					                Filterable="false"
+									Title="@Localizer[Captions.Created]" />
+					<TemplateColumn Title="@Localizer[Captions.Status]">
+						<CellTemplate>
+							@if (context.Item.IsCorrect) {
+								<MudIcon Color="Color.Success"
+								         Icon="@Icons.Material.Filled.Done"
+										 Title="@Localizer[Captions.Valid]" />
+							}
+							else {
+								<MudIcon Color="Color.Warning"
+								         Icon="@Icons.Material.Filled.NotInterested"
+										 Title="@Localizer[Captions.BeenFixed]" />
+							}
+						</CellTemplate>
+					</TemplateColumn>
+					<PropertyColumn Property="x => x.OriginalText" Title="@Localizer[Captions.OriginalText]" />
+					<PropertyColumn Property="x => x.CorrectedText" Title="@Localizer[Captions.CorrectedText]" />
+					<TemplateColumn Sortable="false"
+					                Filterable="false"
+					                StickyRight="true"
+									Title="@Localizer[Captions.Delete]"
+					                CellClass="d-flex justify-end">
+						<CellTemplate>
+							<MudIconButton Size="@Size.Medium"
+										   Class="delete-cell"
+										   Icon="@Icons.Material.Outlined.Delete"
+							               Color="Color.Error"
+							               OnClick="@(_ => DeleteItem(context.Item))" />
+						</CellTemplate>
+					</TemplateColumn>
+				</Columns>
+			</MudDataGrid>
+		</MudCardContent>
+	</MudCard>
+</MudLoading>

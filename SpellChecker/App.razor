@@ -1,0 +1,13 @@
+﻿@inject IStringLocalizer Localizer
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>@Localizer[Captions.NotFound]</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+	        <NotFoundPage/>
+        </LayoutView>
+    </NotFound>
+</Router>

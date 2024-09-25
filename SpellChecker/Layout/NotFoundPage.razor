@@ -1,0 +1,18 @@
+﻿@inject IStringLocalizer Localizer
+
+<PageTitle>@Constants.AppName - @Localizer[Captions.NotFound]</PageTitle>
+
+<MudText Typo="Typo.h1" Align="Align.Center" Color="Color.Error">
+	404
+</MudText>
+<MudText Typo="Typo.h4" Align="Align.Center">
+	@Localizer[Captions.PageNotFound]
+</MudText>
+<MudText Typo="Typo.body1" Align="Align.Center" Class="mt-4">
+	@Localizer[Captions.PageNotFoundDetailed]
+</MudText>
+<div style="display: flex; justify-content: center; margin-top: 1rem;">
+	<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/" Class="mt-4">
+		@Localizer[Captions.BackToHome]
+	</MudButton>
+</div>
